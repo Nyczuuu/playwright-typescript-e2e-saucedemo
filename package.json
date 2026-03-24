@@ -1,0 +1,33 @@
+{
+  "name": "playwright-typescript-e2e-saucedemo",
+  "version": "1.0.0",
+  "description": "Professional E2E Testing Framework with Playwright + TypeScript | Full Saucedemo flow + CI/CD + Allure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nyczuuu/playwright-typescript-e2e-saucedemo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Nyczuuu/playwright-typescript-e2e-saucedemo/issues"
+  },
+  "homepage": "https://github.com/Nyczuuu/playwright-typescript-e2e-saucedemo#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0",
+    "allure-playwright": "^3.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "playwright": "^1.58.2",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.2"
+  }
+}
