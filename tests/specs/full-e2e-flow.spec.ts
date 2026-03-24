@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { CartPage } from '../../pages/CartPage';
+import { CheckoutPage } from '../../pages/CheckoutPage';
 
 test.describe('Full E2E User Journey - Saucedemo', () => {
 
@@ -9,6 +10,7 @@ test.describe('Full E2E User Journey - Saucedemo', () => {
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
 
     // Step 1: Login
     await loginPage.goto();
@@ -27,11 +29,18 @@ test.describe('Full E2E User Journey - Saucedemo', () => {
     await cartPage.verifyOnCartPage();
     await cartPage.verifyProductsInCart(['Sauce Labs Backpack', 'Sauce Labs Bike Light']);
 
-    // Step 4: Proceed to checkout (tutaj stop)
+    // Step 4: Proceed to checkout
     await cartPage.proceedToCheckout();
 
-    await expect(page).toHaveURL(/.*checkout-step-one.html/);
+    // Step 5: Fill shipping information
+    await checkoutPage.fillShippingInformation('Jan', 'Kowalski', '00-123');
 
-    console.log('✅ Full E2E flow do strony checkout przeszedł pomyślnie!');
+    // Step 6: Finish purchase
+    await checkoutPage.finishPurchase();
+
+    // Step 7: Verify order completion
+    await checkoutPage.verifyPurchaseCompleted();
+
+    console.log('🎉 Pełny E2E purchase zakończony sukcesem!');
   });
 });
