@@ -33,6 +33,7 @@ export class ProductsPage {
       .getByRole('button', { name: /add to cart/i });
 
     await addButton.click();
+    console.log(`Dodano produkt: ${productName}`);
   }
 
   async addFirstNProducts(count: number = 2) {
@@ -59,4 +60,45 @@ export class ProductsPage {
     await expect(this.productsTitle).toBeVisible();
     await expect(this.inventoryItems.first()).toBeVisible();
   }
+  
+  async sortByPriceLowToHigh() {
+    await this.sortContainer.selectOption('lohi');
+  }
+
+  async getAllProductNames(): Promise<string[]> {
+    // Pobieramy wszystkie nazwy produktów
+    const nameLocators = this.page.locator('.inventory_item_name');
+    const names = await nameLocators.allTextContents();
+    
+    // Czyścimy białe znaki z każdej nazwy
+    return names.map(name => name.trim());
+  }
+
+  async getProductPrice(productName: string): Promise<number> {
+    const priceLocator = this.page
+      .locator('.inventory_item')
+      .filter({ hasText: productName })
+      .locator('.inventory_item_price');
+
+    const priceText = await priceLocator.textContent();
+    
+    if (!priceText) {
+      throw new Error(`Cena produktu "${productName}" nie została znaleziona`);
+    }
+
+    // Usuwamy znak $ i zamieniamy na number
+    return parseFloat(priceText.replace('$', '').trim());
+  }
+
+  // Ta metoda powinna być używana tylko na stronie koszyka!
+  async removeProductFromCart(productName: string) {
+    const removeButton = this.page
+      .locator('.cart_item')
+      .filter({ hasText: productName })
+      .getByRole('button', { name: /remove/i });
+
+    await removeButton.click();
+    console.log(`Usunięto produkt z koszyka: ${productName}`);
+  }
+
 }

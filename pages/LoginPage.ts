@@ -24,4 +24,10 @@ export class LoginPage {
     await this.passwordInput.fill(password);
     await this.loginButton.click();
   }
+
+  // Poprawiona metoda - tylko zwraca tekst błędu
+  async getErrorMessage(): Promise<string> {
+    const text = await this.errorMessage.textContent();
+    return text || '';
+  }
 }
